@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Sora', sans-serif;
+  background-color: #0f0f13;
+  color: #f0f0f0;
+}
+
+.btn-primary {
+  @apply bg-primary text-white px-5 py-2.5 rounded-xl font-semibold hover:opacity-90 transition-all;
+}
+
+.btn-outline {
+  @apply border border-primary text-primary px-5 py-2.5 rounded-xl font-semibold hover:bg-primary hover:text-white transition-all;
+}
+
+.card {
+  @apply bg-[#1a1a24] rounded-2xl border border-white/5 hover:border-primary/30 transition-all;
+}
+
+.input {
+  @apply w-full bg-[#1a1a24] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-primary transition-all;
+}
