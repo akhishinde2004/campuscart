@@ -42,45 +42,59 @@ export default function ListingsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10">
-      <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between mb-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      {/* Header + Search */}
+      <div className="flex flex-col gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold">Browse Listings</h1>
+          <h1 className="text-xl md:text-2xl font-bold">Browse Listings</h1>
           <p className="text-gray-500 text-sm mt-1">{total} items available</p>
         </div>
-
-        {/* Search */}
-        <form onSubmit={handleSearch} className="flex gap-2 w-full md:w-auto">
-          <input value={search} onChange={e => setSearch(e.target.value)}
-            className="input w-full md:w-64" placeholder="Search items..." />
-          <button type="submit" className="btn-primary px-4 py-2 text-sm">Search</button>
+        <form onSubmit={handleSearch} className="flex gap-2">
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="input flex-1"
+            placeholder="Search items..."
+          />
+          <button type="submit" className="btn-primary px-4 py-2 text-sm whitespace-nowrap">Search</button>
         </form>
       </div>
 
       {/* Filters */}
-      <div className="flex gap-2 flex-wrap mb-6 items-center">
-        {CATEGORIES.map(cat => (
-          <button key={cat}
-            onClick={() => { setCategory(cat); setPage(1) }}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-              category === cat
-                ? 'bg-primary text-white'
-                : 'bg-white/5 text-gray-400 hover:bg-white/10'
-            }`}>
-            {cat}
-          </button>
-        ))}
+      <div className="mb-6 space-y-3">
+        {/* Category pills - scrollable on mobile */}
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat}
+              onClick={() => { setCategory(cat); setPage(1) }}
+              className={`px-3 py-1.5 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap flex-shrink-0 ${
+                category === cat
+                  ? 'bg-primary text-white'
+                  : 'bg-white/5 text-gray-400 hover:bg-white/10'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
 
-        <div className="ml-auto flex items-center gap-2">
-          <span className="text-sm text-gray-500">Max ₹</span>
-          <input value={maxPrice} onChange={e => setMaxPrice(e.target.value)}
-            className="input w-24 py-1.5 text-sm" placeholder="5000" type="number" />
+        {/* Max price - separate row on mobile */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500 whitespace-nowrap">Max Price ₹</span>
+          <input
+            value={maxPrice}
+            onChange={e => setMaxPrice(e.target.value)}
+            className="input w-28 py-1.5 text-sm"
+            placeholder="5000"
+            type="number"
+          />
         </div>
       </div>
 
       {/* Grid */}
       {loading ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
           {Array(8).fill(0).map((_, i) => (
             <div key={i} className="card animate-pulse aspect-square bg-white/5" />
           ))}
@@ -91,7 +105,7 @@ export default function ListingsPage() {
           <p>No listings found. Try different filters!</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
           {listings.map(l => <ListingCard key={l._id} listing={l} />)}
         </div>
       )}
